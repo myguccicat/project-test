@@ -1,0 +1,5 @@
+streamlit
+jieba
+scikit-learn
+snownlp
+plotly

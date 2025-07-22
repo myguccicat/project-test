@@ -2,21 +2,11 @@
 import streamlit as st
 import json
 from modules.nlp import clean_and_tokenize
+from modules.topic_model import generate_topics
+from modules.sentiment import analyze_sentiments
+from modules.suggestion import generate_suggestions
 
-# 模擬模組功能（避免未導入 micropip 等錯誤）
-def mock_generate_topics(cleaned_texts):
-    import plotly.graph_objects as go
-    dummy_topics = ["AI應用", "市場行銷"]
-    fig = go.Figure(go.Bar(x=dummy_topics, y=[10, 7]))
-    return dummy_topics, fig
-
-def mock_analyze_sentiment(texts):
-    return {"正向": 60, "中立": 30, "負向": 10}
-
-def mock_suggest(topics, sentiments):
-    return [
-        {"主題": t, "建議": "可以推出對應產品或服務", "模式": "訂閱制"} for t in topics
-    ]
+from plotly.graph_objects import Figure, Bar, Layout
 
 st.set_page_config(page_title="AI 趨勢分析與商業建議", layout="wide")
 st.title("🔍 關鍵字趨勢分析與商業建議 MVP")
@@ -36,13 +26,15 @@ if st.button("開始分析"):
         cleaned_texts = clean_and_tokenize(texts)
 
         # 4. 主題建模
-        topics, topic_vis = mock_generate_topics(cleaned_texts)
+        topics, topic_vis = generate_topics(cleaned_texts)
 
-        # 5. 情緒分析
-        sentiments = mock_analyze_sentiment(texts)
+        # 5. 情緒分析（含比例與平均分數）
+        sentiments_result = analyze_sentiments(texts)
+        sentiment_counts = sentiments_result["counts"]
+        sentiment_avg = sentiments_result["average"]
 
-        # 6. 商業模式建議
-        suggestions = mock_suggest(topics, sentiments)
+        # 6. 商業模式建議（正式模組）
+        suggestions = generate_suggestions(topics, sentiment_counts, sentiment_avg)
 
     st.success("分析完成！")
 
@@ -51,7 +43,19 @@ if st.button("開始分析"):
     st.plotly_chart(topic_vis)
 
     st.subheader("🎭 情緒分析結果")
-    st.write(sentiments)
+    st.markdown(f"**平均情緒分數**：{sentiment_avg:.2f}")
+
+    fig = Figure(
+        data=[
+            Bar(x=list(sentiment_counts.keys()), y=list(sentiment_counts.values()), marker_color=['red','gray','green'])
+        ],
+        layout=Layout(
+            title="情緒分佈圖",
+            xaxis=dict(title="情緒類型"),
+            yaxis=dict(title="文章數量")
+        )
+    )
+    st.plotly_chart(fig)
 
     st.subheader("💼 商業化建議")
     for s in suggestions:
