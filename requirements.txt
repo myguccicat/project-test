@@ -3,3 +3,5 @@ jieba
 scikit-learn
 snownlp
 plotly
+requests
+BeautifulSoup4

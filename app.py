@@ -1,40 +1,74 @@
 # app.py
 import streamlit as st
 import json
+import os
+from datetime import datetime, timedelta
+
 from modules.nlp import clean_and_tokenize
 from modules.topic_model import generate_topics
 from modules.sentiment import analyze_sentiments
 from modules.suggestion import generate_suggestions
+from modules.crawler import fetch_articles
 
 from plotly.graph_objects import Figure, Bar, Layout
 
 st.set_page_config(page_title="AI 趨勢分析與商業建議", layout="wide")
 st.title("🔍 關鍵字趨勢分析與商業建議 MVP")
 
-# 1. 關鍵字輸入
+# --- Cache Utilities ---
+CACHE_DIR = "cache"
+os.makedirs(CACHE_DIR, exist_ok=True)
+
+def load_cache(keyword, mode):
+    cache_file = f"{CACHE_DIR}/{keyword}_{mode}.json"
+    if os.path.exists(cache_file):
+        modified_time = datetime.fromtimestamp(os.path.getmtime(cache_file))
+        if datetime.now() - modified_time < timedelta(hours=1):
+            with open(cache_file, "r", encoding="utf-8") as f:
+                return json.load(f)
+    return None
+
+def save_cache(keyword, mode, data):
+    cache_file = f"{CACHE_DIR}/{keyword}_{mode}.json"
+    with open(cache_file, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=2)
+
+# --- UI ---
 keyword = st.text_input("請輸入欲分析的關鍵字：", "生成式AI")
+mode = st.selectbox("選擇資料來源：", ["mock", "ptt", "news"], index=0)
+api_key = None
+if mode == "news":
+    api_key = st.text_input("請輸入 Google News API Key：", type="password")
 
 if st.button("開始分析"):
     with st.spinner("正在抓取與處理資料中..."):
-        # 2. 取得模擬文章資料
-        with open("data/sample_articles.json", "r", encoding="utf-8") as f:
-            articles = json.load(f)
+        cache_data = load_cache(keyword, mode)
+        if cache_data:
+            st.info("使用快取資料 (1 小時內最新)")
+            articles = cache_data
+        else:
+            articles = fetch_articles(keyword, mode=mode, limit=10, api_key=api_key)
+            if articles:
+                save_cache(keyword, mode, articles)
 
-        texts = [a["content"] for a in articles]
+        if not articles:
+            st.error("未能取得相關文章，請更換關鍵字或來源/API Key。")
+        else:
+            texts = [a["content"] for a in articles]
 
-        # 3. NLP 預處理
-        cleaned_texts = clean_and_tokenize(texts)
+            # NLP 預處理
+            cleaned_texts = clean_and_tokenize(texts)
 
-        # 4. 主題建模
-        topics, topic_vis = generate_topics(cleaned_texts)
+            # 主題建模
+            topics, topic_vis = generate_topics(cleaned_texts)
 
-        # 5. 情緒分析（含比例與平均分數）
-        sentiments_result = analyze_sentiments(texts)
-        sentiment_counts = sentiments_result["counts"]
-        sentiment_avg = sentiments_result["average"]
+            # 情緒分析
+            sentiments_result = analyze_sentiments(texts)
+            sentiment_counts = sentiments_result["counts"]
+            sentiment_avg = sentiments_result["average"]
 
-        # 6. 商業模式建議（正式模組）
-        suggestions = generate_suggestions(topics, sentiment_counts, sentiment_avg)
+            # 商業建議
+            suggestions = generate_suggestions(topics, sentiment_counts, sentiment_avg)
 
     st.success("分析完成！")
 
