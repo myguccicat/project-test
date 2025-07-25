@@ -1,5 +1,5 @@
 # modules/suggestion.py
-def generate_suggestions(topics, sentiment_counts, sentiment_avg):
+def generate_business_suggestions(topics, sentiment_counts, sentiment_avg):
     """
     根據主題、情緒分佈與平均情緒分數，產出商業建議。
     回傳格式：[{主題, 建議, 模式}]

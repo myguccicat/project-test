@@ -10,7 +10,7 @@ from collections import Counter
 def join_tokens(docs):
     return [" ".join(tokens) for tokens in docs]
 
-def extract_top_keywords_per_cluster(X, labels, vectorizer, top_n=3):
+def extract_topics(X, labels, vectorizer, top_n=3):
     keywords = []
     for cluster in np.unique(labels):
         idxs = np.where(labels == cluster)[0]
