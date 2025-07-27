@@ -15,6 +15,7 @@ load_dotenv()
 from modules.crawler import fetch_articles
 from modules.nlp import clean_text
 from modules.topic_model import extract_topics
+from sklearn.feature_extraction.text import CountVectorizer
 from modules.sentiment import analyze_sentiments
 from modules.suggestion import generate_business_suggestions
 from modules.utils import log_app_usage  # <--- 新增
@@ -26,6 +27,7 @@ st.title("🔍 關鍵字趨勢分析與商業建議工具")
 
 keyword = st.text_input("請輸入關鍵字:")
 mode = st.selectbox("選擇資料來源:", ["ptt", "news"])
+vectorizer = CountVectorizer()
 
 if st.button("執行分析") and keyword:
     log_app_usage(f"[App] User Input Keyword: {keyword} ({mode})")  # <--- 記錄輸入
@@ -49,8 +51,8 @@ if st.button("執行分析") and keyword:
 
     if articles:
         texts = [clean_text(a["title"]) for a in articles]
-        topics = extract_topics(texts)
-        sentiments = [analyze_sentiment(t) for t in texts]
+        topics = extract_topics(texts, vectorizer)
+        sentiments = [analyze_sentiments(t) for t in texts]
         suggestions = generate_business_suggestions(topics, sentiments)
 
         log_app_usage(f"[App] Analysis Completed: {keyword} ({mode})")  # <--- 記錄分析完成
@@ -102,3 +104,9 @@ if st.button("執行分析") and keyword:
             st.markdown(f"**{i}. {suggestion}**")
 
         log_app_usage(f"[App] Suggestion Ready for: {keyword}")  # <--- 記錄建議完成
+
+from modules.crawler import fetch_articles
+
+result = fetch_articles("生成式AI", mode="ptt", limit=5)
+print(result)
+# --- Run the Streamlit app ---
