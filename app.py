@@ -29,7 +29,7 @@ plt.rcParams['axes.unicode_minus'] = False  # 解決負號 "-" 顯示問題
 
 # --- Streamlit App Logic ---
 st.set_page_config(page_title="趨勢分析與商業建議", layout="wide")
-st.title("🔍 關鍵字趨勢分析與商業建議工具")
+st.title("🔍 AI趨勢顧問")
 
 keyword = st.text_input("請輸入關鍵字:")
 mode = st.selectbox("選擇資料來源:", ["ptt", "news"])
