@@ -1,40 +1,24 @@
-# modules/suggestion.py
 def generate_business_suggestions(topics, sentiment_counts, sentiment_avg):
-    """
-    根據主題、情緒分佈與平均情緒分數，產出商業建議。
-    回傳格式：[{主題, 建議, 模式}]
-    """
-
-    def pick_model(score):
-        if score > 0.7:
-            return "訂閱制 / 內容付費"
-        elif score > 0.4:
-            return "廣告收入 / 聯盟行銷"
-        else:
-            return "顧問服務 / B2B 解決方案"
-
     suggestions = []
 
+    # --- 總體情緒判斷 ---
+    if sentiment_avg > 0.66:
+        suggestions.append("整體情緒偏正向，可以考慮推出促銷活動強化品牌聲量。")
+    elif sentiment_avg < 0.33:
+        suggestions.append("整體情緒偏負向，需注意品牌形象與負評聲量。")
+    else:
+        suggestions.append("整體情緒偏中立，可以透過專業內容行銷提高正面關注度。")
+
+    # --- 負向情緒處理建議 ---
+    if sentiment_counts.get("負向", 0) > sentiment_counts.get("正向", 0):
+        suggestions.append("負向情緒比重大，建議針對用戶反饋進行深度調查與公關危機處理。")
+
+    # --- 針對每個主題額外分析 (情緒分佈 dashboard 會用的) ---
     for topic in topics:
-        score = sentiment_avg
-        mode = pick_model(score)
-
-        # 簡單關鍵字比對推薦（可未來替換為 GPT 模型）
-        if "監管" in topic or "法規" in topic:
-            idea = "可針對法規風險提供付費合規顧問"
-        elif "創作" in topic or "生成" in topic:
-            idea = "可推出創作工具或內容平台收費服務"
-        elif "產業" in topic or "應用" in topic:
-            idea = "可進行垂直領域解決方案銷售"
-        elif "資安" in topic or "資料" in topic:
-            idea = "提供企業資安諮詢或資料管理方案"
-        else:
-            idea = "可考慮透過數據平台提供商業洞察服務"
-
-        suggestions.append({
-            "主題": topic,
-            "建議": idea,
-            "模式": mode
-        })
+        cluster_id = topic["cluster"]
+        keywords = ", ".join(topic["keywords"])
+        # 這裡可擴充條件式來依據主題關鍵字給個別建議
+        if any(word in keywords for word in ["投訴", "問題", "負評"]):
+            suggestions.append(f"Cluster {cluster_id} ({keywords}) 相關主題需加強售後服務與負評回應策略。")
 
     return suggestions
