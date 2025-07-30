@@ -63,3 +63,37 @@
 [2025-07-29T12:07:00.669230] [App] User Input Keyword: 生成式AI (ptt)
 [2025-07-29T12:07:00.678420] [App] Cache Hit: 生成式AI (ptt)
 [2025-07-29T12:07:02.074600] [App] Analysis Completed: 生成式AI (ptt)
+[2025-07-30T07:44:12.077639] [App] User Input Keyword: 貓 (ptt)
+[2025-07-30T07:44:12.097725] [App] Cache Miss & Fetched: 貓 (ptt)
+[2025-07-30T07:44:12.265215] [App] Analysis Completed: 貓 (ptt)
+[2025-07-30T10:20:51.694769] [App] User Input Keyword: 房價 (ptt)
+[2025-07-30T10:20:51.709477] [App] Cache Miss & Fetched: 房價 (ptt)
+[2025-07-30T10:20:51.818948] [App] Analysis Completed: 房價 (ptt)
+[2025-07-30T10:21:23.533171] [App] User Input Keyword: 房價 (news)
+[2025-07-30T10:21:25.047112] [App] Cache Miss & Fetched: 房價 (news)
+[2025-07-30T10:21:25.443876] [App] Analysis Completed: 房價 (news)
+[2025-07-30T10:22:16.568920] [App] User Input Keyword: 房價 (news)
+[2025-07-30T10:22:16.590665] [App] Cache Hit: 房價 (news)
+[2025-07-30T10:22:16.831216] [App] Analysis Completed: 房價 (news)
+[2025-07-30T10:24:17.148738] [App] User Input Keyword: 電腦 (ptt)
+[2025-07-30T10:24:17.158034] [App] Cache Miss & Fetched: 電腦 (ptt)
+[2025-07-30T10:24:17.277937] [App] Analysis Completed: 電腦 (ptt)
+[2025-07-30T10:24:29.317118] [App] User Input Keyword: 電腦 (news)
+[2025-07-30T10:24:30.664719] [App] Cache Miss & Fetched: 電腦 (news)
+[2025-07-30T10:24:30.784806] [App] Analysis Completed: 電腦 (news)
+[2025-07-30T10:29:44.989756] [App] User Input Keyword: 颱風 (ptt)
+[2025-07-30T10:29:44.997623] [App] Cache Miss & Fetched: 颱風 (ptt)
+[2025-07-30T10:29:46.636882] [App] Analysis Completed: 颱風 (ptt)
+[2025-07-30T13:17:26.634256] Fetched & Cached: 區塊鏈 (ptt) - 10 articles
+[2025-07-30T13:17:28.030899] Fetched & Cached: 區塊鏈 (news) - 10 articles
+[2025-07-30T13:17:28.035092] Fetched & Cached: 元宇宙 (ptt) - 10 articles
+[2025-07-30T13:17:29.422858] Fetched & Cached: 元宇宙 (news) - 10 articles
+[2025-07-30T13:17:30.060263] Fetched & Cached: 綠能 (ptt) - 10 articles
+[2025-07-30T13:17:30.630153] Fetched & Cached: 綠能 (news) - 10 articles
+[2025-07-30T13:17:30.928018] Fetched & Cached: 電動車 (ptt) - 10 articles
+[2025-07-30T13:17:31.584092] Fetched & Cached: 電動車 (news) - 10 articles
+[2025-07-30T13:17:31.945095] Fetched & Cached: 生成式AI (ptt) - 10 articles
+[2025-07-30T13:17:33.604195] Fetched & Cached: 生成式AI (news) - 10 articles
+[2025-07-30T13:57:21.381214] [App] User Input Keyword: 房價 (news)
+[2025-07-30T13:57:21.833522] [App] Cache Miss & Fetched: 房價 (news)
+[2025-07-30T13:57:30.705856] [App] Analysis Completed: 房價 (news)

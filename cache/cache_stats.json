@@ -1,0 +1,15 @@
+{
+  "fetch_logs": [
+    {
+      "timestamp": "2025-07-30T13:17:33.606904",
+      "stats": {
+        "cache_hits": 0,
+        "cache_misses": 10,
+        "expired_deleted": 0
+      }
+    }
+  ],
+  "cache_hits": 0,
+  "cache_misses": 10,
+  "expired_deleted": 0
+}

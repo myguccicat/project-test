@@ -10,6 +10,11 @@ import itertools
 import io
 from sklearn.decomposition import PCA
 import plotly.express as px
+import plotly.io as pio
+import xlsxwriter
+
+pio.templates.default = "plotly_white"
+print(xlsxwriter.__version__)
 
 # --- Load API Key from .env ---
 load_dotenv()
@@ -135,7 +140,7 @@ if st.button("執行分析") and keyword:
                             "摘要": summary
                         })
 
-            export_df = pd.DataFrame(export_data)
+        export_df = pd.DataFrame(export_data)
 
          # 轉成 Excel bytes
         output = io.BytesIO()

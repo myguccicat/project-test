@@ -7,7 +7,7 @@ def generate_business_suggestions(topics, sentiment_counts, sentiment_avg):
     elif sentiment_avg < 0.33:
         suggestions.append("整體情緒偏負向，需注意品牌形象與負評聲量。")
     else:
-        suggestions.append("整體情緒偏中立，可以透過專業內容行銷提高正面關注度。")
+        suggestions.append("整體情緒偏中立，可以透過活動增加互動與討論度。")
 
     # --- 負向情緒處理建議 ---
     if sentiment_counts.get("負向", 0) > sentiment_counts.get("正向", 0):
@@ -15,7 +15,7 @@ def generate_business_suggestions(topics, sentiment_counts, sentiment_avg):
 
     # --- 針對每個主題額外分析 (情緒分佈 dashboard 會用的) ---
     for topic in topics:
-        cluster_id = topic["cluster"]
+        cluster_id = topic.get("cluster", 0)
         keywords = ", ".join(topic["keywords"])
         # 這裡可擴充條件式來依據主題關鍵字給個別建議
         if any(word in keywords for word in ["投訴", "問題", "負評"]):

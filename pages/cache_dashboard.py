@@ -1,3 +1,8 @@
+# pages/cache_dashboard.py
+"""
+Cache Dashboard for monitoring cache statistics and app usage logs.
+This page provides insights into cache hits, misses, and historical fetch logs.
+"""
 import streamlit as st
 import pandas as pd
 import json
