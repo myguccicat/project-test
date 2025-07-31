@@ -20,7 +20,7 @@ print(xlsxwriter.__version__)
 load_dotenv()
 
 # --- Other imports ---
-from modules.crawler import fetch_articles
+from modules.crawler_fetch import fetch_articles
 from modules.nlp import clean_text
 from modules.topic_model import extract_topics
 from sklearn.feature_extraction.text import CountVectorizer

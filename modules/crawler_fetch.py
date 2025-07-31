@@ -12,7 +12,8 @@ def mock_ptt_data(keyword, limit):
     return [{
         "title": f"[PTT] {keyword} 熱門文章 {i}",
         "link": f"https://www.ptt.cc/bbs/Board/{i}.html",
-        "date": time.strftime("%Y-%m-%d %H:%M:%S")
+        "date": time.strftime("%Y-%m-%d %H:%M:%S"),  # 模擬日期
+        "content": f"這是關於 {keyword} 的文章內容 {i}。"
     } for i in range(1, limit + 1)]
 
 # --- Google News API Fetch Function ---
@@ -33,11 +34,17 @@ def google_news_api_fetch(keyword, limit, api_key):
     articles = []
     for article in data.get("articles", []):
         articles.append({
-            "title": article["title"],
-            "link": article["url"],
-            "date": article["publishedAt"]
+            "title": article.get("title", "No Title"),
+            "link": article.get("url", ""),
+            "date": article.get("publishedAt", "")
         })
     return articles
+try:
+    response = requests.get(url, params=params, timeout=10)
+    response.raise_for_status()
+
+except requests.RequestException as e:
+    print(f"[Error] Google News API 請求失敗: {e}")
 
 # --- Main Fetch Function ---
 def fetch_articles(keyword, mode="ptt", limit=10, api_key=None):
@@ -57,5 +64,7 @@ def fetch_articles(keyword, mode="ptt", limit=10, api_key=None):
 
 # --- For Testing ---
 if __name__ == "__main__":
+    print("[Demo] PTT Mock Data")
     print(fetch_articles("生成式AI", mode="ptt", limit=3))
+    print("[Demo] Google News API")
     print(fetch_articles("區塊鏈", mode="news", limit=3))
