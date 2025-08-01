@@ -4,7 +4,7 @@ import json
 import os
 from dotenv import load_dotenv
 from datetime import datetime, timedelta
-from modules.crawler_fetch import fetch_articles
+from modules.crawler import fetch_articles
 from modules.utils import log_app_usage  # <-- 共用 log 函數
 
 # --- Load API Key from .env ---

@@ -25,9 +25,12 @@ def google_news_api_fetch(keyword, limit, api_key):
         "pageSize": limit,
         "apiKey": api_key
     }
-    response = requests.get(url, params=params)
-    if response.status_code != 200:
-        print(f"[Error] Google News API 回應錯誤: {response.status_code}")
+
+    try:
+        response = requests.get(url, params=params, timeout=10)
+        response.raise_for_status()
+    except requests.RequestException as e:
+        print(f"[Error] Google News API 請求失敗: {e}")
         return []
 
     data = response.json()
@@ -36,15 +39,10 @@ def google_news_api_fetch(keyword, limit, api_key):
         articles.append({
             "title": article.get("title", "No Title"),
             "link": article.get("url", ""),
-            "date": article.get("publishedAt", "")
+            "date": article.get("publishedAt", ""),
+            "content": article.get("description", "No Content")  # 你測試裡有驗證 content
         })
     return articles
-try:
-    response = requests.get(url, params=params, timeout=10)
-    response.raise_for_status()
-
-except requests.RequestException as e:
-    print(f"[Error] Google News API 請求失敗: {e}")
 
 # --- Main Fetch Function ---
 def fetch_articles(keyword, mode="ptt", limit=10, api_key=None):
