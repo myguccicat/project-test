@@ -1,0 +1,19 @@
+name: django  # 你的環境名稱，可改名
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python=3.10  # 建議與你目前開發環境一致
+  - streamlit=1.35.0
+  - pandas=2.2.2
+  - matplotlib=3.8.4
+  - seaborn=0.13.2
+  - python-dotenv=1.0.1
+  - scikit-learn=1.4.2
+  - plotly=5.22.0
+  - xlsxwriter=3.2.5
+  - jieba=0.42.1
+  - requests=2.32.3
+  - pip
+  - pip:
+      - streamlit-option-menu  # 若你未來用到側邊選單元件

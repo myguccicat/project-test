@@ -12,30 +12,30 @@ from sklearn.decomposition import PCA
 import plotly.express as px
 import plotly.io as pio
 import xlsxwriter
-
-pio.templates.default = "plotly_white"
-print(xlsxwriter.__version__)
-
-# --- Load API Key from .env ---
-load_dotenv()
-
+import jieba
+from sklearn.feature_extraction.text import CountVectorizer
 # --- Other imports ---
 from modules.crawler import fetch_articles
 from modules.nlp import clean_text
 from modules.topic_model import extract_topics
-from sklearn.feature_extraction.text import CountVectorizer
 from modules.sentiment import analyze_sentiments, summarize_text
 from modules.suggestion import generate_business_suggestions
 from modules.utils import log_app_usage  # <--- 新增
 from cache.cache_utils import load_cache, save_cache
 
+# --- Global Settings ---
+pio.templates.default = "plotly_white"
 plt.rcParams['font.sans-serif'] = ['Microsoft JhengHei']  # 微軟正黑體
 plt.rcParams['axes.unicode_minus'] = False  # 解決負號 "-" 顯示問題
 
-# --- Streamlit App Logic ---
+# --- Load API Key from .env ---
+load_dotenv()
+
+# --- Streamlit App Config ---
 st.set_page_config(page_title="趨勢分析與商業建議", layout="wide")
 st.title("🔍 AI趨勢顧問")
 
+# --- User Input ---
 keyword = st.text_input("請輸入關鍵字:")
 mode = st.selectbox("選擇資料來源:", ["ptt", "news"])
 vectorizer = CountVectorizer()
@@ -61,12 +61,12 @@ if st.button("執行分析") and keyword:
             articles = []
 
     if articles:
+        # --- NLP Processing ---
         texts = [clean_text(a["title"]) for a in articles]
         topics = extract_topics(texts, n_clusters=3)
         sentiment_result = analyze_sentiments(texts)
         sentiment_avg = sentiment_result["average"]
         suggestions = generate_business_suggestions(topics, sentiment_result["counts"], sentiment_avg)
-
         log_app_usage(f"[App] Analysis Completed: {keyword} ({mode})")  # <--- 記錄分析完成
 
         # --- Display Articles DataFrame ---
@@ -97,108 +97,83 @@ if st.button("執行分析") and keyword:
 
         # --- Drill-Down 互動展開 ---
         st.subheader("🔎 主題文章細節 Drill-down")
-
         st.info("請點擊下方 Scatter Plot 的點，將自動展開該 Cluster 細節")
-        clicked_point = st.session_state.get("clicked_cluster", None)
         selected_cluster = st.selectbox("選擇要檢視的 Cluster ID", [topic["cluster"] for topic in topics])
 
         for topic in topics:
             if topic["cluster"] == selected_cluster:
                 st.markdown(f"### Cluster {topic['cluster']} — 關鍵字: {', '.join(topic['keywords'])}")
-
-                cluster_articles = topic["article_idxs"]
-
-                for idx in cluster_articles:
-                    article_detail = sentiment_result["details"][idx]
-                    article_title = article_detail["title"]
-                    article_label = article_detail["label"]
-                    article_score = article_detail["score"]
-
-                    summary = summarize_text(article_title)
-
-                    with st.expander(f"【{article_label}】{article_title} (分數: {article_score:.2f})"):
+                for idx in topic["article_idxs"]:
+                    detail = sentiment_result["details"][idx]
+                    summary = summarize_text(detail["title"])
+                    with st.expander(f"【{detail['label']}】{detail['title']} (分數: {detail['score']:.2f})"):
                         st.write(f"摘要：{summary}")
 
-        # --- Drill-down 匯出按鈕 ---
-        if st.button("📥 匯出該 Cluster 文章情緒報告"):
-            export_data = []
-            for topic in topics:
-                if clicked_point is not None and topic["cluster"] == clicked_point:
-                    cluster_articles = topic["article_idxs"]
-
-                    for idx in cluster_articles:
-                        article_detail = sentiment_result["details"][idx]
-                        article_title = article_detail["title"]
-                        article_label = article_detail["label"]
-                        article_score = article_detail["score"]
-                        summary = summarize_text(article_title)
-
-                        export_data.append({
-                            "標題": article_title,
-                            "情緒標籤": article_label,
-                            "情緒分數": article_score,
-                            "摘要": summary
+    # --- Drill-down 匯出按鈕 - Export Cluster Report ---
+    if st.button("📥 匯出該 Cluster 文章情緒報告"):
+        export_data = []
+        for topic in topics:
+            if topic["cluster"] == selected_cluster:
+                for idx in topic["article_idxs"]:
+                    detail = sentiment_result["details"][idx]
+                    summary = summarize_text(detail["tiltle"])
+                    export_data.append({"標題": detail["title"],
+                        "情緒標籤": detail["label"],
+                        "情緒分數": detail["score"],
+                        "摘要": summary
                         })
-
-        export_df = pd.DataFrame(export_data)
-
-         # 轉成 Excel bytes
-        output = io.BytesIO()
-        with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
-            export_df.to_excel(writer, index=False, sheet_name='Cluster_Report')
-        output.seek(0)
-
-        st.download_button(
-            label="📄 下載 Excel 報告",
-            data=output,
-            file_name=f"Cluster_{selected_cluster}_Report.xlsx",
-            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-        ) 
+                    
+        # 匯出資料有東西才執行匯出
+        if export_data:
+            export_df = pd.DataFrame(export_data)
+            # 轉成 Excel bytes
+            output = io.BytesIO()
+            with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
+                export_df.to_excel(writer, index=False, sheet_name='Cluster_Report')
+            output.seek(0)
+            # 下載按鈕
+            st.download_button(
+                label="📄 下載 Excel 報告",
+                data=output,
+                file_name=f"Cluster_{selected_cluster}_Report.xlsx",
+                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            )
+        else:
+            st.warning("該 Cluster 內沒有文章可以匯出。")
 
         # --- Topic Co-occurrence Heatmap (Real Data) ---
         st.subheader("🗺️ 主題關聯熱力圖")
-        word_pairs = []
-        for topic in topics:
-            words = topic["keywords"]   # 這邊 keywords 已經是 list of words
-            word_pairs.extend(itertools.combinations(words, 2))
-
+        word_pairs = list(itertools.chain.from_iterable(
+            itertools.combinations(topic["keywords"], 2) for topic in topics
+        ))
         pair_counts = Counter(word_pairs)
         unique_words = sorted(set(itertools.chain.from_iterable(word_pairs)))
-
-        co_occurrence_matrix = pd.DataFrame(0, index=unique_words, columns=unique_words)
+        matrix = pd.DataFrame(0, index=unique_words, columns=unique_words)
         for (w1, w2), count in pair_counts.items():
-            co_occurrence_matrix.at[w1, w2] = count
-            co_occurrence_matrix.at[w2, w1] = count
+            matrix.at[w1, w2] = count
+            matrix.at[w2, w1] = count
 
         fig2, ax2 = plt.subplots(figsize=(8, 6))
-        sns.heatmap(co_occurrence_matrix, annot=True, cmap="YlGnBu", ax=ax2)
+        sns.heatmap(matrix, annot=True, cmap="YlGnBu", ax=ax2)
         st.pyplot(fig2)
 
         # --- Topic Sentiment Distribution Dashboard ---
         st.subheader("📊 主題情緒分佈 Dashboard 總結")
-
         summary_data = []
-
         for topic in topics:
-            cluster_id = topic["cluster"]
-            cluster_keywords = ", ".join(topic["keywords"])
-            cluster_articles = topic["article_idxs"]
-
-            cluster_sentiments = [sentiment_result["details"][i]["label"] for i in cluster_articles]
-            sentiment_counts_cluster = Counter(cluster_sentiments)
-
+            sentiments = [sentiment_result["details"][i]["label"] for i in topic["article_idxs"]]
+            counts = Counter(sentiments)
             summary_data.append({
-                "Cluster": cluster_id,
-                "Keywords": cluster_keywords,
-                "正向": sentiment_counts_cluster.get("正向", 0),
-                "中立": sentiment_counts_cluster.get("中立", 0),
-                "負向": sentiment_counts_cluster.get("負向", 0),
-                "總數": len(cluster_articles)
+                "Cluster": topic["cluster"],
+                "Keywords": ", ".join(topic["keywords"]),
+                "正向": counts.get("正向", 0),
+                "中立": counts.get("中立", 0),
+                "負向": counts.get("負向", 0),
+                "總數": len(topic["article_idxs"])
             })
-
         summary_df = pd.DataFrame(summary_data)
         st.dataframe(summary_df)
-
+        
         # 找出正向最多 & 負向最多的主題
         most_positive = summary_df.sort_values(by="正向", ascending=False).iloc[0]
         most_negative = summary_df.sort_values(by="負向", ascending=False).iloc[0]
@@ -210,29 +185,19 @@ if st.button("執行分析") and keyword:
         st.subheader("💡 商業建議")
         for i, suggestion in enumerate(suggestions, 1):
             st.markdown(f"**{i}. {suggestion}**")
-
         log_app_usage(f"[App] Suggestion Ready for: {keyword}")  # <--- 記錄建議完成
         
         # --- 2D Cluster Scatter Plot ---
         st.subheader("🖼️ Cluster 2D Scatter Plot (視覺化)")
-
         # 1. 文章向量化 (TF-IDF)
-        tokenized_texts = [' '.join(text) for text in [jieba.lcut(t) for t in texts]]
-        vectorizer = CountVectorizer()
-        X = vectorizer.fit_transform(tokenized_texts)
-
+        tokenized_texts = [' '.join(jieba.lcut(t)) for t in texts]
+        X = CountVectorizer().fit_transform(tokenized_texts)
         # 2. PCA 降到 2 維
-        pca = PCA(n_components=2)
-        X_pca = pca.fit_transform(X.toarray())
-
+        X_pca = PCA(n_components=2).fit_transform(X.toarray())
         # 3. 準備 DataFrame
         scatter_data = []
         for i, (x, y) in enumerate(X_pca):
-            cluster_id = None
-            for topic in topics:
-                if i in topic["article_idxs"]:
-                    cluster_id = topic["cluster"]
-                    break
+            cluster_id = next((topic["cluster"] for topic in topics if i in topic["article_idxs"]), None)
             scatter_data.append({
                 "標題": articles[i]["title"],
                 "情緒標籤": sentiment_result["details"][i]["label"],
@@ -240,18 +205,13 @@ if st.button("執行分析") and keyword:
                 "X": x,
                 "Y": y
             })
-
         scatter_df = pd.DataFrame(scatter_data)
-
         # 4. 畫散點圖
         fig3 = px.scatter(
-            scatter_df,
-            x="X", y="Y",
-            color="Cluster",
+            scatter_df, x="X", y="Y", color="Cluster",
             hover_data=["標題", "情緒標籤"],
             title="文章聚類分佈"
         )
-
         selected_point = st.plotly_chart(fig3, use_container_width=True).selected_points
 
         if selected_point:
@@ -260,5 +220,18 @@ if st.button("執行分析") and keyword:
             st.session_state.clicked_cluster = clicked_cluster
         else:
             st.session_state.clicked_cluster = None
+    # --- Dashboard 總覽匯出 ---Export Dashboard Summary
+    if st.button("📥 匯出 Dashboard 總覽報告"):
+        output_summary = io.BytesIO()
+        with pd.ExcelWriter(output_summary, engine='xlsxwriter') as writer:
+            summary_df.to_excel(writer, index=False, sheet_name='Dashboard_Summary')
+        output_summary.seek(0)
 
+        st.download_button(
+            label="📊 下載 Dashboard 總覽報告",
+            data=output_summary,
+            file_name=f"Dashboard_Summary_{keyword}.xlsx",
+            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        )
+# --- End of App ---
 # --- Run the Streamlit app ---

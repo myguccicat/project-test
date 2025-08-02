@@ -1,10 +1,14 @@
-streamlit
-jieba
-scikit-learn
-snownlp
-plotly
-requests
-beautifulsoup4
+streamlit==1.35.0
+pandas==2.2.2
+matplotlib==3.8.4
+seaborn==0.13.2
+python-dotenv==1.0.1
+scikit-learn==1.4.2
+plotly==5.22.0
 xlsxwriter==3.2.5
+jieba==0.42.1
+requests==2.32.3
+pytest==8.4.1
+snownlp
+beautifulsoup4
 pytest-cov
-pytest 8.4.1
