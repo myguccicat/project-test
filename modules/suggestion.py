@@ -1,3 +1,4 @@
+# modules/suggestion.py
 def generate_business_suggestions(topics, sentiment_counts, sentiment_avg):
     suggestions = []
 

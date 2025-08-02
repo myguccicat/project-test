@@ -1,14 +1,28 @@
-import unittest
-from modules.utils import log_app_usage
+import os
+from modules.utils import log_app_usage, cache_stats
 
-class TestUtilsModule(unittest.TestCase):
+def test_log_app_usage(tmp_path):
+    log_file = tmp_path / "test_log.log"
+    original_log_path = "cache/app_usage.log"
 
-    def test_log_app_usage(self):
-        # 測試不會拋錯例外（假設 log 是寫入檔案或 print，不回傳值）
-        try:
-            log_app_usage("Test log entry")
-        except Exception as e:
-            self.fail(f"log_app_usage() raised an exception: {e}")
+    # 暫時更換 log 檔路徑
+    os.makedirs("cache", exist_ok=True)
+    os.rename(original_log_path, original_log_path + ".bak") if os.path.exists(original_log_path) else None
+    try:
+        # 測試 log 寫入
+        log_app_usage("Test log entry")
+        assert os.path.exists(original_log_path)
+        with open(original_log_path, "r", encoding="utf-8") as f:
+            lines = f.readlines()
+            assert any("Test log entry" in line for line in lines)
+    finally:
+        # 還原
+        if os.path.exists(original_log_path + ".bak"):
+            os.remove(original_log_path)
+            os.rename(original_log_path + ".bak", original_log_path)
 
-if __name__ == '__main__':
-    unittest.main()
+def test_cache_stats():
+    stats = cache_stats()
+    assert "cache_hits" in stats
+    assert "cache_misses" in stats
+    assert "last_updated" in stats

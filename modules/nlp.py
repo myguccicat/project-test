@@ -15,3 +15,17 @@ def clean_and_tokenize(texts):
         tokens = [w for w in jieba.cut(t) if w not in STOPWORDS and len(w) > 1]
         tokenized.append(tokens)
     return tokenized
+
+def tokenize(text):
+    """
+    將單一文字斷詞並過濾停用詞。
+    """
+    text = clean_text(text)
+    return [w for w in jieba.cut(text) if w not in STOPWORDS and len(w) > 1]
+
+def generate_ngrams(tokens, n=2):
+    """
+    生成 n-gram。
+    """
+    return ["".join(tokens[i:i+n]) for i in range(len(tokens)-n+1)]
+

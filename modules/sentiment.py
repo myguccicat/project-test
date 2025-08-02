@@ -3,6 +3,8 @@ from snownlp import SnowNLP
 from collections import Counter
 
 def classify_sentiment(text):
+    if not isinstance(text, str) or not text.strip():
+        return ("中立", 0.5) #或你想要的預設值
     s = SnowNLP(text)
     score = s.sentiments
     if score > 0.66:
@@ -11,7 +13,7 @@ def classify_sentiment(text):
         label = "負向"
     else:
         label = "中立"
-    return label, score
+    return (label, score)
 
 def analyze_sentiments(texts):
     details = []  # 每篇文章的情緒細節
@@ -39,6 +41,8 @@ def analyze_sentiments(texts):
     }
 
 def summarize_text(text, max_sentences=2):
+    if not isinstance(text, str) or not text.strip():
+        return ""
     s = SnowNLP(text)
     summary = s.summary(max_sentences)
     return ' '.join(summary)
