@@ -22,7 +22,7 @@ from modules.sentiment import analyze_sentiments, summarize_text
 from modules.suggestion import generate_business_suggestions
 from modules.utils import log_app_usage  # <--- 新增
 from cache.cache_utils import load_cache, save_cache
-
+from urllib.parse import urlparse, parse_qs
 # --- Global Settings ---
 pio.templates.default = "plotly_white"
 plt.rcParams['font.sans-serif'] = ['Microsoft JhengHei']  # 微軟正黑體
@@ -235,3 +235,16 @@ if st.button("執行分析") and keyword:
         )
 # --- End of App ---
 # --- Run the Streamlit app ---
+# 取得 URL Query (重要)
+query_params = st.experimental_get_query_params()
+keyword = query_params.get("keyword", [""])[0]  # 預設空字串
+
+st.title("Streamlit 嵌入 Django 範例")
+st.write(f"目前搜尋關鍵字：**{keyword}**")
+
+# 這邊可以做你原本的搜尋邏輯，例如：
+if keyword:
+    st.write(f"模擬搜尋結果 for: {keyword}")
+    # 這邊寫你的分析邏輯、顯示結果...
+else:
+    st.write("請從 Django 填寫關鍵字搜尋。")

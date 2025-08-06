@@ -12,3 +12,4 @@ pytest==8.4.1
 snownlp
 beautifulsoup4
 pytest-cov
+django
