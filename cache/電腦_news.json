@@ -2,51 +2,61 @@
   {
     "title": "收集資料時 3 步驟「任務化」！AI 工具取代不了的整理技巧教學",
     "link": "https://www.playpcesor.com/2025/07/3-ai.html",
-    "date": "2025-07-07T10:31:00Z"
+    "date": "2025-07-07T10:31:00Z",
+    "content": "資料、筆記之間最好的「連結」關係是「任務」，而不是屬性、相關性 ，這也是在 AI 時代擁有大量自動分析資料工具後， AI 依然無法為我們代勞的整理技巧。也是幫助你不再努力分類、標籤、連結後，還是出現「用不到」、「找不到」、「只是蒐集沒在用」的狀況。"
   },
   {
     "title": "不快速回訊、不整理郵件，專注任務筆記，才是最聰明的整理術",
     "link": "https://www.playpcesor.com/2025/07/blog-post.html",
-    "date": "2025-07-25T14:40:00Z"
+    "date": "2025-07-25T14:40:00Z",
+    "content": "最近在「 防彈筆記法 」課程中，有學員問我：「看到簡單的郵件或訊息，快速回應掉就好啦！為什麼還要整理成筆記？」 我也常常觀察到身邊許多工作者，很習慣隨時拿出手機，打開郵件、即時通訊軟體，開始不斷的快速回訊，這個討論串回完，就切換到下個討論串。因為很多人這樣做， GTD  也說兩..."
   },
   {
-    "title": "不只 AI 問答！我用 ChatGPT 打造專案第二大腦的六步驟實作教學",
-    "link": "https://www.playpcesor.com/2025/06/ai-chatgpt.html",
-    "date": "2025-06-29T13:05:00Z"
+    "title": "ChatGPT 免費推出「學習模式」：決策反思、教材練習 5 個案例實測",
+    "link": "https://www.playpcesor.com/2025/07/chatgpt-study-mode.html",
+    "date": "2025-07-31T13:26:00Z",
+    "content": "ChatGPT 今天推出了一個新功能「 Study Mode （學習模式）」，或者叫做「學習與研究模式」 ，在這個模式中， AI 不會直接提供我們答案，而是用引導式問題跟我們互動，隨時根據我們的能力提供學習輔助，並主動引導我們去反思，在適當時機提供測驗檢核， 從而讓我在實際參與中..."
   },
   {
     "title": "受保護的內容: 量子計算機",
     "link": "https://pansci.asia/archives/379250",
-    "date": "2025-07-15T02:00:00Z"
+    "date": "2025-07-15T02:00:00Z",
+    "content": "量子電腦被譽為改變世界的科技，這次從傳統電腦出發，逐步解析量子位元、邏輯閘、德意志演算法，並討論目前量子電腦的實用性與發展現況。"
+  },
+  {
+    "title": "【宣言全文一次看】Meta CEO 祖克伯：超級智慧「指日可待」",
+    "link": "https://www.inside.com.tw/article/39118-meta-superintelligence",
+    "date": "2025-07-31T02:29:00Z",
+    "content": "他強調，人類未來的主要運算裝置將會是眼鏡這類個人化設備，而非傳統的電腦或手機。"
   },
   {
     "title": "資深電腦玩家注意　FPGA復刻版 Commodore 64 今秋登場",
     "link": "https://www.cool3c.com/article/241639",
-    "date": "2025-07-18T16:00:00Z"
+    "date": "2025-07-18T16:00:00Z",
+    "content": "對資深科技迷來說，Commodore 64 這名字應該不陌生。這台在1980年代紅遍全球的8位元家用電腦，曾是全球最暢銷的個人電腦。即便是比較年輕的朋友，應該也看過一些復刻機或長得很像的鍵盤作品（俗稱同人機）。這次，Commodore International 的新團隊打算讓它真正重返市場，推出一款名為「Commodore 64 Ultimate」的復刻機，目前正在進行群眾募資，預計今年秋天出貨。這次不再只是單純復刻外觀，而是採用 FPGA（現場可程式化邏輯閘陣列）技術，官方說模擬精準度高達 99%。這種晶片可…"
+  },
+  {
+    "title": "Google DeepMind 新 AI：「前所未有」精準度繪製全球地圖！",
+    "link": "https://www.inside.com.tw/article/39120-alphaearth-foundations",
+    "date": "2025-07-31T07:17:00Z",
+    "content": "AlphaEarth Foundations 運作方式如同虛擬衛星，能將大量的地球觀測數據整合成一個統一的數位表示法，又稱為「嵌入」（embedding），以便電腦系統處理資料。"
+  },
+  {
+    "title": "Google Chrome 推出 AI 商店摘要功能，正面迎戰亞馬遜",
+    "link": "https://www.inside.com.tw/article/39093-google-chrome-adds-ai-powered-store-summaries-to-help-u-s-shoppers",
+    "date": "2025-07-29T05:53:00Z",
+    "content": "Chrome 電腦版（美國限定）新增「商店摘要」功能，利用 AI 彙整第三方評價，提供產品、價格、退貨等資訊摘要，方便用戶快速判斷網購商店品質。"
+  },
+  {
+    "title": "美國司法部：對中國出售晶片設計產品，益華電腦認罪付41億罰款",
+    "link": "https://www.thenewslens.com/article/256439",
+    "date": "2025-07-29T02:38:00Z",
+    "content": "美商益華電腦（Cadence）承認非法出售晶片設計軟體與硬體給中國國防科技大學，違反美國出口管制。該校被指控利用超級電腦模擬核爆等軍事活動。益華電腦同意支付超過1.4億美元罰款，並接受三年緩刑。"
   },
   {
     "title": "老電腦 Windows 重灌真的會變快嗎？資深玩家公佈實測結果",
     "link": "https://www.techbang.com/posts/124089-reinstalling-windows-speed-test-results",
-    "date": "2025-07-17T06:30:00Z"
-  },
-  {
-    "title": "KYMCO Genie 115 與 Xciting X350 登場，推全車系噴射電腦元件 4 年保固政策",
-    "link": "https://www.techbang.com/posts/124127-kymco-genie-115-xciting-x350-launch",
-    "date": "2025-07-04T09:00:00Z"
-  },
-  {
-    "title": "Radxa推出E24C迷你路由器電腦，搭Rockchip RK3528A SoC搭4組GbE網路埠",
-    "link": "https://www.techbang.com/posts/124340-radxa-e24c-router",
-    "date": "2025-07-17T06:00:00Z"
-  },
-  {
-    "title": "OpenAI 推出 ChatGPT Agent：AI 助理可直接操控電腦，幫你完成複雜任務",
-    "link": "https://www.techbang.com/posts/124377-openai-chatgpt-agent-control-computer",
-    "date": "2025-07-18T03:00:00Z"
-  },
-  {
-    "title": "Razer電競椅大跳水價6999元 這可是原價20990元的椅子啊！還送Razer地墊",
-    "link": "https://www.cool3c.com/article/241665",
-    "date": "2025-07-19T05:11:00Z"
+    "date": "2025-07-17T06:30:00Z",
+    "content": "電腦變慢重灌有效？實測打破迷思！舊系統與新系統效能差距微乎其微，關鍵在於日常維護。別再盲目重灌系統，良好使用習慣才是王道，重灌系統不一定變快喔！不少 Windows 使用者長年以來都相信一種觀念：「電腦用久了會變慢，最好的解法就是重灌系統」。這種做法在過去或許成立，但到了 2025 年，還有必要嗎？資深科技媒體人 Will Smith 最近做了一項實測，結果讓人大感意外。\n這次測試使用兩台高階 Windows 11 電腦，一台搭載 AMD Ryzen 9 9800X3D 處理器、64GB 記憶體，主要用於影片剪輯…"
   }
 ]
