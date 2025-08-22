@@ -81,7 +81,7 @@
 #     unittest.main()
 import unittest
 from unittest.mock import patch, MagicMock
-from modules.crawler import fetch_articles, google_news_api_fetch, mock_ptt_data
+from modules.crawler import fetch_articles, google_news_api_fetch, crawl_ptt_data, crawl_single_article
 
 class TestCrawlerFetch(unittest.TestCase):
 

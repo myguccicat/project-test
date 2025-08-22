@@ -13,3 +13,4 @@ snownlp
 beautifulsoup4
 pytest-cov
 django
+beautifulsoup4

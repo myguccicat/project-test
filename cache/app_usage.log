@@ -156,3 +156,49 @@
 [2025-08-07T00:53:14.361011] [App] Cache Miss & Fetched: 狗 (news)
 [2025-08-07T00:53:14.532942] [App] Analysis Completed: 狗 (news)
 [2025-08-07T00:53:16.996533] [App] Suggestion Ready for: 狗
+[2025-08-07T01:07:45.866805] [App] User Input Keyword: 狗 (news)
+[2025-08-07T01:07:45.895531] [App] Cache Hit: 狗 (news)
+[2025-08-07T01:07:46.138720] [App] Analysis Completed: 狗 (news)
+[2025-08-07T01:07:48.494483] [App] Suggestion Ready for: 狗
+[2025-08-07T02:53:42.463669] [App] User Input Keyword: 收納櫃掀蓋 (ptt)
+[2025-08-07T02:53:42.473147] [App] Cache Miss & Fetched: 收納櫃掀蓋 (ptt)
+[2025-08-07T02:53:42.636498] [App] Analysis Completed: 收納櫃掀蓋 (ptt)
+[2025-08-07T02:53:44.036969] [App] Suggestion Ready for: 收納櫃掀蓋
+[2025-08-07T02:59:03.027132] [App] User Input Keyword: 收納櫃掀蓋 (ptt)
+[2025-08-07T02:59:03.053756] [App] Cache Hit: 收納櫃掀蓋 (ptt)
+[2025-08-07T02:59:03.125996] [App] Analysis Completed: 收納櫃掀蓋 (ptt)
+[2025-08-07T02:59:04.483330] [App] Suggestion Ready for: 收納櫃掀蓋
+[2025-08-07T03:01:25.298879] [App] User Input Keyword: 元宇宙 (news)
+[2025-08-07T03:01:26.498877] [App] Cache Miss & Fetched: 元宇宙 (news)
+[2025-08-07T03:01:26.790452] [App] Analysis Completed: 元宇宙 (news)
+[2025-08-07T03:01:28.829621] [App] Suggestion Ready for: 元宇宙
+[2025-08-07T03:01:49.568930] [App] User Input Keyword: 元宇宙 (news)
+[2025-08-07T03:01:49.596625] [App] Cache Hit: 元宇宙 (news)
+[2025-08-07T03:01:49.728502] [App] Analysis Completed: 元宇宙 (news)
+[2025-08-07T03:01:52.028495] [App] Suggestion Ready for: 元宇宙
+[2025-08-07T11:06:00.796397] [App] User Input Keyword: 電腦 (ptt)
+[2025-08-07T11:06:02.394714] [App] Fetch Failed: 電腦 (ptt)
+[2025-08-07T11:06:08.214179] [App] User Input Keyword: 電腦 (news)
+[2025-08-07T11:06:09.710310] [App] Cache Miss & Fetched: 電腦 (news)
+[2025-08-07T11:06:19.708312] [App] Analysis Completed: 電腦 (news)
+[2025-08-07T11:06:22.120408] [App] Suggestion Ready for: 電腦
+[2025-08-07T12:47:21.216272] [App] User Input Keyword: 貓 (ptt)
+[2025-08-07T12:48:51.219439] [App] Cache Miss & Fetched: 貓 (ptt)
+[2025-08-07T12:49:04.163602] [App] Analysis Completed: 貓 (ptt)
+[2025-08-07T12:49:07.181086] [App] Suggestion Ready for: 貓
+[2025-08-07T12:51:34.680827] [App] User Input Keyword: 工作 (ptt)
+[2025-08-07T12:51:55.937009] [App] Cache Miss & Fetched: 工作 (ptt)
+[2025-08-07T12:51:56.108320] [App] Analysis Completed: 工作 (ptt)
+[2025-08-07T12:51:59.326152] [App] Suggestion Ready for: 工作
+[2025-08-07T15:07:45.534635] [App] User Input Keyword: 高級 (news)
+[2025-08-07T15:07:47.060132] [App] Cache Miss & Fetched: 高級 (news)
+[2025-08-07T15:07:47.960300] [App] Analysis Completed: 高級 (news)
+[2025-08-07T15:07:50.783087] [App] Suggestion Ready for: 高級
+[2025-08-07T15:35:18.935486] [App] User Input Keyword: 高級 (news)
+[2025-08-07T15:35:18.960240] [App] Cache Hit: 高級 (news)
+[2025-08-07T15:35:19.185656] [App] Analysis Completed: 高級 (news)
+[2025-08-07T15:35:22.982030] [App] Suggestion Ready for: 高級
+[2025-08-21T09:09:23.020798] [App] User Input Keyword: JOLLY (news)
+[2025-08-21T09:09:23.771983] [App] Cache Miss & Fetched: JOLLY (news)
+[2025-08-21T09:09:24.793242] [App] Analysis Completed: JOLLY (news)
+[2025-08-21T09:09:26.943864] [App] Suggestion Ready for: JOLLY
